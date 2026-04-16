@@ -1,0 +1,5 @@
+- name: Getting Started
+  href: articles/
+- name: Api Reference
+  href: api/
+  homepage: api/BaseballSharp.yml

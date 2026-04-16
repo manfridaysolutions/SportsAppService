@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="BaseballSharp-master/src/BaseballSharp.csproj" />
+  <Project Path="SportsAppDataAccess/MFS.SportsApp.DataAccess.csproj" />
+  <Project Path="SportsAppDataAccessTest/MFS.SportsApp.DataAccess.Tests.csproj" />
+  <Project Path="SportsAppModels/MFS.SportsApp.Models.csproj" />
+  <Project Path="SportsAppServiceWebAPI/MFS.SportsApp.Service.WebAPI.csproj" />
+</Solution>
