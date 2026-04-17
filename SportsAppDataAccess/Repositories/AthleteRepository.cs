@@ -7,26 +7,9 @@ using System.Text;
 
 namespace MFS.SportsApp.DataAccess.Repositories
 {
-    public class AthleteRepository : IAthleteRepository
+    public class AthleteRepository : GenericRepository<Athlete>, IAthleteRepository
     {
-        private readonly SportsDbContext _context;
-
-        public AthleteRepository(SportsDbContext context)
-        {
-            _context = context;
-        }
-
-        // 1. Get all athletes
-        public async Task<IEnumerable<Athlete>> GetAllAsync()
-        {
-            return await _context.Athletes.ToListAsync();
-        }
-
-        // 2. Get by ID
-        public async Task<Athlete?> GetByIdAsync(int id)
-        {
-            return await _context.Athletes.FindAsync(id);
-        }
+        public AthleteRepository(SportsDbContext context) : base(context) { }
 
         // 3. CUSTOM: Get athletes by Team ID
         // This utilizes the navigation property ICollection<Roster> we added to the Athlete class
@@ -35,32 +18,6 @@ namespace MFS.SportsApp.DataAccess.Repositories
             return await _context.Athletes
                 .Where(a => a.Rosters.Any(r => r.TeamId == teamId))
                 .ToListAsync();
-        }
-
-        // 4. Create
-        public async Task<Athlete> CreateAsync(Athlete athlete)
-        {
-            _context.Athletes.Add(athlete);
-            await _context.SaveChangesAsync();
-            return athlete;
-        }
-
-        // 5. Update
-        public async Task UpdateAsync(Athlete athlete)
-        {
-            _context.Entry(athlete).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
-
-        // 6. Delete
-        public async Task DeleteAsync(int id)
-        {
-            var athlete = await _context.Athletes.FindAsync(id);
-            if (athlete != null)
-            {
-                _context.Athletes.Remove(athlete);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

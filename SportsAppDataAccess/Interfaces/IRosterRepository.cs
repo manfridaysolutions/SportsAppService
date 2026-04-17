@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MFS.SportsApp.DataAccess.Interfaces
 {
-    public interface IRpsterRepository : IRepository<Roster>
+    public interface IRosterRepository : IRepository<Roster>
     {
         // Add specific methods here
     }
