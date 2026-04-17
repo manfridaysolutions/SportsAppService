@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MFS.SportsApp.DataAccess.Repositories
+namespace MFS.SportsApp.DataAccess.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -18,7 +18,7 @@ namespace MFS.SportsApp.DataAccess.Repositories
     public class GenericRepository<T> : IRepository<T> where T : class
     {
         protected readonly SportsDbContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
 
         public GenericRepository(SportsDbContext context)
         {

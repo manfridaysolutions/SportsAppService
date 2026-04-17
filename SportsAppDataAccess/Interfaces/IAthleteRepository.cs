@@ -1,13 +1,11 @@
-﻿using MFS.SportsApp.DataAccess.Repositories;
-using MFS.SportsApp.Models;
-using System;
+﻿using MFS.SportsApp.Models;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MFS.SportsApp.DataAccess.Interfaces
 {
     public interface IAthleteRepository : IRepository<Athlete>
     {
-        // Add specific methods here
+        Task<IEnumerable<Athlete>> GetByTeamIdAsync(int teamId);
     }
 }

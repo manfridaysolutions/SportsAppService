@@ -16,6 +16,9 @@ public class SportsDbContext : DbContext
     public DbSet<Athlete> Athletes => Set<Athlete>();
     public DbSet<Team> Teams => Set<Team>();
     public DbSet<Roster> Rosters => Set<Roster>();
+    // Register sport-related entities so they are part of the EF Core model
+    public DbSet<Sport> Sports => Set<Sport>();
+    public DbSet<SportCategory> SportCategories => Set<SportCategory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
