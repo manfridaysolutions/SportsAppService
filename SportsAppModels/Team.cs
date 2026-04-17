@@ -23,7 +23,7 @@ namespace MFS.SportsApp.Models
 
         [MaxLength(50)]
         [Column("short_name")]
-        public string ShortName { get; set; }
+        public string? ShortName { get; set; }
 
         [Required]
         [MaxLength(10)]
@@ -32,30 +32,30 @@ namespace MFS.SportsApp.Models
 
         [MaxLength(100)]
         [Column("city")]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         [MaxLength(100)]
         [Column("state_province")]
-        public string StateProvince { get; set; }
+        public string? StateProvince { get; set; }
 
         [MaxLength(100)]
         [Column("country")]
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         [MaxLength(200)]
         [Column("venue_name")]
-        public string VenueName { get; set; }
+        public string? VenueName { get; set; }
 
         [MaxLength(7)]
         [Column("primary_color", TypeName = "bpchar")]
-        public string PrimaryColor { get; set; }
+        public string? PrimaryColor { get; set; }
 
         [MaxLength(7)]
         [Column("secondary_color", TypeName = "bpchar")]
-        public string SecondaryColor { get; set; }
+        public string? SecondaryColor { get; set; }
 
         [Column("logo_url")]
-        public string LogoUrl { get; set; }
+        public string? LogoUrl { get; set; }
 
         [Column("founded_year")]
         public int? FoundedYear { get; set; }
