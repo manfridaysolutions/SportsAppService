@@ -7,31 +7,31 @@ namespace MFS.SportsApp.Models;
 public class Athlete
 {
     [Key]
-    [Column("id")]
-    public int Id { get; set; }
+    [Column("athlete_id")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int AthleteId { get; set; }
 
     [Required]
     [MaxLength(100)]
     [Column("first_name")]
-    public string FirstName { get; set; } = string.Empty;
+    public string FirstName { get; set; }
 
     [Required]
     [MaxLength(100)]
     [Column("last_name")]
-    public string LastName { get; set; } = string.Empty;
+    public string LastName { get; set; }
 
     [Required]
     [MaxLength(200)]
     [Column("display_name")]
-    public string DisplayName { get; set; } = string.Empty;
+    public string DisplayName { get; set; }
 
     [Column("birth_date")]
-    public DateOnly? BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
-    [Required]
-    [MaxLength(3)]
+    [MaxLength(100)]
     [Column("nationality")]
-    public string Nationality { get; set; } = string.Empty;
+    public string? Nationality { get; set; }
 
     [Column("height_inches")]
     public int? HeightInches { get; set; }
@@ -39,6 +39,10 @@ public class Athlete
     [Column("weight_lbs")]
     public int? WeightLbs { get; set; }
 
+    [Required]
+    [Column("is_active")]
+    public bool IsActive { get; set; } = true;
     // Collection of roster entries for this team
     public virtual ICollection<Roster> Rosters { get; set; } = new List<Roster>();
 }
+

@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="BaseballSharp-master/src/BaseballSharp.csproj" />
   <Project Path="SportsAppDataAccess/MFS.SportsApp.DataAccess.csproj" />
   <Project Path="SportsAppDataAccessTest/MFS.SportsApp.DataAccess.Tests.csproj" />

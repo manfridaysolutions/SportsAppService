@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: testservice1
+      POSTGRES_PASSWORD: sportsapp
+      POSTGRES_DB: testdb1
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  # webapi:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./SportsAppServiceWebAPI/Dockerfile
+  #   container_name: sportsapp_webapi
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=testdb1;Username=testservice1;Password=sportsapp
+  #   ports:
+  #     - "5000:8080" # Maps local port 5000 to container port 8080
+
+volumes:
+  postgres_data:
