@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MFS.SportsApp.DataAccess.Repositories
 {
-    public class AthleteRepository : GenericRepository<Athlete>, IAthleteRepository
+    public class AthleteRepository : Repository<Athlete>, IAthleteRepository
     {
         public AthleteRepository(SportsDbContext context) : base(context) { }
 

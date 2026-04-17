@@ -31,5 +31,7 @@ namespace MFS.SportsApp.Models
 
         // Navigation property (assumes a SportCategory entity exists)
         public SportCategory? Category { get; set; }
+
+        public virtual ICollection<League> Leagues { get; set; } = new List<League>();
     }
 }

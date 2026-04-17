@@ -15,6 +15,9 @@ builder.Services.AddDbContext<SportsDbContext>(options =>
 // Register repositories
 builder.Services.AddScoped<IAthleteRepository, AthleteRepository>();
 builder.Services.AddScoped<ISportCategoryRepository, SportCategoryRepository>();
+builder.Services.AddScoped<ITeamRosterRepository, TeamRosterRepository>();
+builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

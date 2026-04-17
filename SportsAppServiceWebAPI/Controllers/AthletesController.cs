@@ -1,34 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
+using MFS.SportsApp.DataAccess;
 using MFS.SportsApp.DataAccess.Interfaces;
 using MFS.SportsApp.Models;
+using MFS.SportsApp.Models.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MFS.SportsApp.Service.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AthletesController : ControllerBase
+public class AthletesController : Controller<Athlete>
 {
-    private readonly IAthleteRepository _repo;
+    public AthletesController(IAthleteRepository repo) : base(repo) { }
 
-    public AthletesController(IAthleteRepository repo)
-    {
-        _repo = repo;
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var items = await _repo.GetAllAsync();
-        return Ok(items);
-    }
-
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> Get(int id)
-    {
-        var item = await _repo.GetByIdAsync(id);
-        if (item == null) return NotFound();
-        return Ok(item);
-    }
+    private IAthleteRepository Repo => _repo as IAthleteRepository;
 
     // GET api/athletes/team/5
     [HttpGet("team/{teamId}")]
@@ -36,7 +20,7 @@ public class AthletesController : ControllerBase
     {
         if (teamId <= 0) return BadRequest("teamId must be a positive integer.");
 
-        var athletes = await _repo.GetByTeamIdAsync(teamId);
+        var athletes = await Repo.GetByTeamIdAsync(teamId);
 
         // return 200 with empty array if none found; optionally return 404 instead:
         return Ok(athletes);
@@ -46,16 +30,22 @@ public class AthletesController : ControllerBase
     public async Task<IActionResult> Create([FromBody] Athlete athlete)
     {
         if (athlete == null) return BadRequest();
-        var created = await _repo.CreateAsync(athlete);
-        return CreatedAtAction(nameof(Get), new { id = created.AthleteId }, created);
+        var created = await Repo.CreateAsync(athlete);
+
+        return RecursionHelper.GetKeyPropertyInfo<Athlete>(created) is (string keyName, object keyValue) 
+            ? CreatedAtAction(nameof(Get), new { id = keyValue }, created) 
+            : NoContent();
+
+        // return CreatedAtAction(nameof(Get), new { id = created.AthleteId }, created);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] Athlete athlete)
     {
         if (athlete == null || athlete.AthleteId != id) return BadRequest();
-        var existing = await _repo.GetByIdAsync(id);
+        var existing = await Repo.GetByIdAsync(id);
         if (existing == null) return NotFound();
+
         // copy fields
         existing.FirstName = athlete.FirstName;
         existing.LastName = athlete.LastName;
@@ -68,16 +58,7 @@ public class AthletesController : ControllerBase
         existing.Rosters = athlete.Rosters;
         existing.AthleteId = athlete.AthleteId;
 
-        await _repo.UpdateAsync(existing);
-        return NoContent();
-    }
-
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var existing = await _repo.GetByIdAsync(id);
-        if (existing == null) return NotFound();
-        await _repo.DeleteAsync(id);
+        await Repo.UpdateAsync(existing, id);
         return NoContent();
     }
 }

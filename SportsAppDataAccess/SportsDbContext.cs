@@ -19,6 +19,9 @@ public class SportsDbContext : DbContext
     // Register sport-related entities so they are part of the EF Core model
     public DbSet<Sport> Sports => Set<Sport>();
     public DbSet<SportCategory> SportCategories => Set<SportCategory>();
+    public DbSet<TeamRoster> TeamRosters => Set<TeamRoster>();
+
+    public DbSet<League> Leagues => Set<League>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,6 +70,16 @@ public class SportsDbContext : DbContext
                   .HasForeignKey(r => r.TeamId)
                   .OnDelete(DeleteBehavior.Cascade);
         });
+
+        modelBuilder.Entity<TeamRoster>(entity =>
+        {
+            entity.HasNoKey();
+            entity.ToView("v_team_rosters", "sports");
+        });
+
+        modelBuilder.Entity<Team>()
+            .HasIndex(t => new { t.LeagueId, t.TeamName })
+            .IsUnique();
 
         base.OnModelCreating(modelBuilder);
     }

@@ -7,29 +7,11 @@ namespace MFS.SportsApp.Service.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SportCategoriesController : ControllerBase
+    public class SportCategoriesController : Controller<SportCategory>
     {
-        private readonly ISportCategoryRepository _repo;
+        public SportCategoriesController(ISportCategoryRepository repo) : base(repo) { }
 
-        public SportCategoriesController(ISportCategoryRepository repo)
-        {
-            _repo = repo;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var items = await _repo.GetAllAsync();
-            return Ok(items);
-        }
-
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var item = await _repo.GetByIdAsync(id);
-            if (item == null) return NotFound();
-            return Ok(item);
-        }
+        private ISportCategoryRepository Repo => _repo as ISportCategoryRepository;
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SportCategory category)
@@ -49,16 +31,7 @@ namespace MFS.SportsApp.Service.WebAPI.Controllers
             existing.CategoryName = category.CategoryName;
             existing.Description = category.Description;
 
-            await _repo.UpdateAsync(existing);
-            return NoContent();
-        }
-
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existing = await _repo.GetByIdAsync(id);
-            if (existing == null) return NotFound();
-            await _repo.DeleteAsync(id);
+            await _repo.UpdateAsync(existing, id);
             return NoContent();
         }
     }

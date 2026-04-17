@@ -7,7 +7,7 @@ using MFS.SportsApp.Models;
 
 namespace MFS.SportsApp.DataAccess.Repositories
 {
-    public class SportCategoryRepository : GenericRepository<SportCategory>, ISportCategoryRepository
+    public class SportCategoryRepository : Repository<SportCategory>, ISportCategoryRepository
     {
         public SportCategoryRepository(SportsDbContext context) : base(context) { }
     }
